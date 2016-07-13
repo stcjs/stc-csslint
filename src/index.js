@@ -4,6 +4,11 @@ import {CSSLint} from 'csslint';
 import defaultOptions from './default_options.js';
 
 let options = null;
+const logMethod = {
+  'error': 'error',
+  'warning': 'warning',
+  'info': 'notice'
+};
 /**
  * Use csslint to verify code
  */
@@ -24,11 +29,6 @@ export default class CSSLintPlugin extends Plugin {
    * update
    */
   update(data){
-    let logMethod = {
-      'error': 'error',
-      'warning': 'warning',
-      'info': 'notice'
-    }
     data.messages.forEach((message, i) => {
       if(logMethod.hasOwnProperty(message.type)){
         this[logMethod[message.type]](`${message.message}` ,message.line,message.col);
@@ -53,6 +53,6 @@ export default class CSSLintPlugin extends Plugin {
    * set default include file
    */
    static include() {
-     return /\.*$/i;
+     return /\.css$/i;
    }
 }
